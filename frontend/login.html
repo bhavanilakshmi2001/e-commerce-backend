@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css" />
+<style>
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+}
+
+body {
+  background-color: #f4f5f7;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+</style>
+</head>
+
+<body>
+    <div class="auth-container">
+        <div class="auth-box">
+            <h2>Login</h2>
+            <form id="loginForm">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" required />
+
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" required />
+
+                <button type="submit" class="btn">Login</button>
+            </form>
+            <p class="link-text">Don't have an account? <a href="register.html">Register</a></p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Product View</title>
+    <link rel="stylesheet" href="style.css">
+<style>
+    .nav-button {
+    background-color: #2874f0;         /* Flipkart/Amazon-style blue */
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    margin-right: 10px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin:50px 20px;
+}
+
+.nav-button:hover {
+    background-color: #0b59d6;         /* Slightly darker on hover */
+}
+
+</style>
+</head>
+
+<body onload="loadProductView()">
+    <div class="container">
+        <button onclick="window.history.back()" class="nav-button">Back to Products</button>
+        <h2>Product Details</h2>
+        <div id="productDetails" class="product-view-card"></div>
+        </div>
+    <script src="script.js"></script>
+</body>
+
+
+</html>

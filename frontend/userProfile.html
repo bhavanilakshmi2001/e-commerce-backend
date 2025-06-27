@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>My Profile</title>
+    <!-- <link rel="stylesheet" href="profile.css"> -->
+<style>
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding:30px 40px;
+  width: auto;
+}
+
+h1 {
+  font-weight: 700;
+  font-size: 28px;
+  margin-bottom: 24px;
+  color: #111;
+  letter-spacing: 0.05em;
+  text-decoration: underline;
+}
+
+.profile-details p {
+  font-size: 20px;
+  margin-bottom: 16px;
+  color: #444;
+}
+
+.profile-details p strong {
+  color: #000;
+  font-weight: 600;
+  min-width: 80px;
+  display: inline-block;
+}
+
+.back-btn {
+  margin: 30px;
+  padding: 10px 26px;
+  background-color:#3b82f6;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  max-width: 200px;
+}
+
+.back-btn:hover {
+  background-color:#1b66de;
+}
+
+.error {
+  color: #d32f2f;
+  font-weight: 600;
+  font-size: 16px;
+  margin-top: 20px;
+  align-self: center;
+}
+
+</style>
+
+</head>
+
+<body>
+  <button onclick="window.location.href='products.html'" class="back-btn">Back to Home</button>
+    <div class="container">
+       <h1>User Profile</h1>
+        <div id="profileContainer" class="profile-details"></div>
+       
+    </div>
+
+    <script>
+        const BASE_URL = "http://localhost:8080";
+
+        async function loadProfile() {
+            try {
+                const response = await fetch(`${BASE_URL}/auth/me`, {
+                    credentials: "include"
+                });
+
+                if (!response.ok) {
+                    throw new Error("User not logged in or session expired.");
+                }
+
+                const user = await response.json();
+
+                const profileHtml = `
+                    <p><strong>ID:</strong> ${user.userId}</p>
+                    <p><strong>Name:</strong> ${user.name}</p>
+                    <p><strong>Email:</strong> ${user.email}</p>
+                    <p><strong>Role:</strong> ${user.role}</p>
+                `;
+
+                document.getElementById("profileContainer").innerHTML = profileHtml;
+            } catch (error) {
+                document.getElementById("profileContainer").innerHTML = `<p class="error">${error.message}</p>`;
+            }
+        }
+
+        loadProfile();
+    </script>
+</body>
+
+</html>

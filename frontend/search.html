@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Search Products</title>
+</head>
+
+<body>
+    <h1>Search Products</h1>
+
+    <input type="text" id="searchInput" placeholder="Enter product name">
+    <button onclick="searchProducts()">Search</button>
+
+    <div id="resultsContainer"></div>
+
+    <script  src="script.js"></script>
+    <script>
+        const BASE_URL = "http://localhost:8080"; // adjust as needed
+
+        async function searchProducts() {
+            const keyword = document.getElementById("searchInput").value.trim();
+            const container = document.getElementById("resultsContainer");
+
+            if (!keyword) {
+                container.innerHTML = "<p>Please enter a product name to search.</p>";
+                return;
+            }
+
+            try {
+                const res = await fetch(`${BASE_URL}/products/search?keyword=${encodeURIComponent(keyword)}`);
+
+                if (!res.ok) {
+                    throw new Error("Failed to fetch products.");
+                }
+
+                const products = await res.json();
+                container.innerHTML = "";
+
+                if (products.length === 0) {
+                    container.innerHTML = "<p>No products found.</p>";
+                    return;
+                }
+
+                products.forEach(product => {
+                    const div = document.createElement("div");
+                    div.style.border = "1px solid #ccc";
+                    div.style.padding = "10px";
+                    div.style.marginBottom = "10px";
+                    div.innerHTML = `
+                        <h3>${product.name}</h3>
+                        <p>${product.description || "No description"}</p>
+                        <p><strong>Price:</strong> $${product.price}</p>
+                        <p><strong>Quantity:</strong> ${product.quantity}</p>
+                    `;
+                    container.appendChild(div);
+                });
+
+            } catch (err) {
+                container.innerHTML = `<p style="color:red;">${err.message}</p>`;
+            }
+        }
+    </script>
+</body>
+
+</html>

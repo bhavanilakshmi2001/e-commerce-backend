@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Product List</title>
+    <link rel="stylesheet" href="style.css">
+
+
+<style>
+  .top-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+       padding: 8px 20px;
+        color: white;
+        flex-wrap: wrap;
+       background-color: #2569d6e4;
+    }
+
+    .nav-left,
+    .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .nav-link {
+        text-decoration: none;
+    }
+
+    .nav-button {
+        background-color:whitesmoke;
+        color:blue;
+        border:none;
+        padding: 8px 16px;
+        font-size: 14px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.2s ease;
+    }
+
+    .nav-button:hover {
+        font-size:15px;
+    }
+
+    .nav-search {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-grow: 1;
+        max-width: 500px;
+        font-weight: 500;
+    }
+
+    .nav-search input {
+        padding: 8px 10px;
+        font-size: 14px;
+         border-radius: 4px;
+        width: 100%;
+ }
+
+    .nav-search button {
+        padding: 9px 12px;
+        background-color: blue;
+        color: white;
+        border:none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .nav-search button:hover {
+        background-color: #0041a8;
+    }
+
+ 
+</style>
+
+
+
+</head>
+
+<body onload="loadProducts()">
+<nav class="top-nav">
+    <div class="nav-left">
+        <div id="actionButtons" class="action-buttons"></div>
+    </div>
+
+    <div class="nav-search">
+        <input type="text" id="searchInput" placeholder="Search products..." />
+        <button onclick="searchProducts()">Search</button>
+    </div>
+
+    <div class="nav-right">
+        <a href="userProfile.html" class="nav-link"><button class="nav-button">Profile</button></a>
+        <button class="nav-button" onclick="logout()">Logout</button>
+    </div>
+</nav>
+
+
+    <div class="container">
+<h2>Product List</h2>
+ <div id="productList"></div>
+
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        const BASE_URL = "http://localhost:8080"; // your backend
+
+        async function loadAllProducts() {
+            const res = await fetch(`${BASE_URL}/products`);
+            const products = await res.json();
+            renderProducts(products);
+        }
+
+        function renderProducts(products) {
+                const container = document.getElementById("productList");
+                container.innerHTML = "";
+
+                if (products.length === 0) {
+                    container.innerHTML = "<p>No products found.</p>";
+                    return;
+                }
+
+                products.forEach(product => {
+                    const div = document.createElement("div");
+                    div.className = "product-card"; // Add card class
+                    div.innerHTML = `
+                    <img src="${product.imageUrl}" alt="${product.name}" />
+                    <h3  class="product-title">${product.name}</h3>
+                    <p class="product-description">${product.description || "No description available."}</p>
+                    <p class="product-price"> $${product.price}</p>
+                    <p class="product-stock">stock: ${product.quantity}</p>
+                    <div class="button-group">
+                    <button class="view-btn" onclick="window.location.href='productView.html?view=1&productId=${product.productId}'">View</button>
+                    <button class="add-cart-btn" onclick="addToCart(${product.productId})">Add to Cart</button>
+                    </div>
+        `;    container.appendChild(div);
+                });
+            }
+
+
+        async function searchProducts() {
+            const keyword = document.getElementById("searchInput").value.trim();
+
+            if (!keyword) {
+                // If no keyword, show all products again
+                loadAllProducts();
+                return;
+            }
+
+            try {
+                const res = await fetch(`${BASE_URL}/products/search?keyword=${encodeURIComponent(keyword)}`);
+                if (!res.ok) throw new Error("Failed to search products");
+                const products = await res.json();
+                renderProducts(products);
+            } catch (err) {
+                const container = document.getElementById("productList");
+                container.innerHTML = `<p style="color:red;">${err.message}</p>`;
+            }
+        }
+
+        // Load all products on page load
+        loadAllProducts();
+    </script>
+
+</body>
+
+</html>

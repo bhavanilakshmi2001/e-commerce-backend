@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Register</title>
+    <link rel="stylesheet" href="style.css" />
+
+<style>
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+}
+
+body {
+  background-color: #f4f5f7;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+</style>
+</head>
+
+<body>
+    <div class="auth-container">
+        <div class="auth-box">
+            <h2>Register</h2>
+            <form id="registerForm">
+                <label for="name">Name</label>
+                <input type="text" name="name" id="name" required />
+
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" required />
+
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" required />
+
+                <label for="adminKey">Admin Key (optional)</label>
+                <input type="text" name="adminKey" id="adminKey" />
+
+                <button type="submit" class="btn">Register</button>
+            </form>
+            <p class="link-text">Already have an account? <a href="login.html">Login</a></p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
