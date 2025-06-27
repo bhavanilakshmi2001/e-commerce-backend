@@ -1,4 +1,4 @@
-#🛒 E-Commerce Backend System built with Java, Spring Boot, and MySQL.
+##🛒 E-Commerce Backend System built with Java, Spring Boot, and MySQL.
 
 This project handles core backend functionalities for an online shopping platform. It includes user registration and login, session-based authentication, product management, shopping cart operations, order placement, and PDF invoice generation.
 
